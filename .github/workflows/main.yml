@@ -45,6 +45,7 @@ jobs:
           git config user.name "RafaelBNN"
           git config user.email "rafaelbnneto@gmail.com"
           git add .
+          git commit -m "automatic commit triggered by main.yml workflow"
           git push
       - name: Run git status
         run: git status
