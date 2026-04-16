@@ -1,0 +1,47 @@
+run-name: Primeiro Workflow do grande ${{ github.event.inputs.my_name }}
+
+on:
+  push:
+    branches: [ main ]
+    
+  pull_request:
+    branches: [ main ]
+    
+  workflow_dispatch:
+    inputs:
+      input1:
+        description: "Input 1"
+        required: true
+        default: "creu"
+      input2:
+        description: "Input 2"
+        required: true
+      my_name:
+        type: string
+        required: true
+        default: "Rafael Bernardo"
+
+jobs:
+  test_inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.inputs.input1 }} | ${{ github.event.inputs.input2 }}"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+      - run: npm install
+      - run: gulp build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MyFirstPackage
+          path: dest
+      - name: Change dados-abertos-precos-glp.csv file
+        run: python ./scripts/append_line.py
+      - name: Run git status
+        run: git status
