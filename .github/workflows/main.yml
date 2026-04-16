@@ -2,11 +2,11 @@ run-name: Primeiro Workflow do grande ${{ github.event.inputs.my_name }}
 
 on:
   push:
-    branches: [ main ]
-    
+    branches: [main]
+
   pull_request:
-    branches: [ main ]
-    
+    branches: [main]
+
   workflow_dispatch:
     inputs:
       input1:
@@ -21,6 +21,9 @@ on:
         required: true
         default: "Rafael Bernardo"
 
+permissions:
+  contents: write
+
 jobs:
   test_inputs:
     runs-on: ubuntu-latest
@@ -32,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: "3.13"
       - name: Change dados-abertos-precos-glp.csv file
         run: python ./scripts/append_line.py
       - name: Run git status
