@@ -37,3 +37,11 @@ jobs:
         run: python ./scripts/append_line.py
       - name: Run git status
         run: git status
+      - name: Push changes to remote
+        run: |
+          git config user.name "RafaelBNN"
+          git config user.email "rafaelbnneto@gmail.com"
+          git add .
+          git push
+      - name: Run git status
+        run: git status
